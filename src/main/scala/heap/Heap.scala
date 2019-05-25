@@ -1,21 +1,21 @@
 package heap
 
 object Heap {
-  private[heap] def maxHeapify(arr: Array[Int], i: Int, heapsize: Int = -1): Unit = {
+  private[heap] def maxHeapify(arr: Array[Int], i: Int, heapSize: Int = -1): Unit = {
 
-    val hp = if (heapsize >= 0 ) heapsize else arr.length
+    val hs = if (heapSize >= 0 ) heapSize else arr.length
 
     val l = leftChildIndex(i)
     val r = rightChildIndex(i)
     var largest = i
-    if (l < hp && arr(l) > arr(largest))
+    if (l < hs && arr(l) > arr(largest))
       largest = l
-    if (r < hp && arr(r) > arr(largest))
+    if (r < hs && arr(r) > arr(largest))
       largest = r
 
     if (i != largest) {
       swap(arr, largest, i)
-      maxHeapify(arr, largest, hp)
+      maxHeapify(arr, largest, hs)
     }
   }
 

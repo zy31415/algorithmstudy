@@ -4,6 +4,8 @@ import org.scalatest.FunSuite
 
 import scala.util.Random
 
+import utils.TestUtils.assertAscending
+
 class HeapTest extends FunSuite {
   test("empty array") {
     val arr = Array[Int]()
@@ -86,11 +88,5 @@ class HeapTest extends FunSuite {
     val arr = Seq.fill(1000)(Random.nextInt).toArray
     Heap.heapsort(arr)
     assertAscending(arr)
-  }
-
-  def assertAscending(arr: Array[Int]): Unit = {
-    (0 until arr.length - 1).foreach{
-      ii => assert(arr(ii) <= arr(ii+1))
-    }
   }
 }
