@@ -1,6 +1,7 @@
 package heap.youngtableau
 
 object YoungTableau {
+  val inf = Int.MaxValue
   private[youngtableau] def swapForward(tab: Array[Array[Int]], ij: (Int, Int)): Unit = {
     validateInputs(tab, ij)
     val i = ij._1
@@ -22,6 +23,33 @@ object YoungTableau {
     if (largest_i != i || largest_j != j) {
       swap(tab, (i, j), (largest_i, largest_j))
       swapForward(tab, (largest_i, largest_j))
+    }
+  }
+
+  private def swapBackward(tab: Array[Array[Int]], ij: (Int, Int)): Unit = {
+    validateInputs(tab, ij)
+    val i = ij._1
+    val j = ij._2
+
+    val M = tab.length
+    val N = tab(0).length
+
+    var largest_i = i
+    var largest_j = j
+
+    if (i+1 < M && tab(i+1)(j) < tab(largest_i)(largest_j)) {
+      largest_i = i + 1
+      largest_j = j
+    }
+
+    if (j + 1 < N && tab(i)(j+1) < tab(largest_i)(largest_j)) {
+      largest_i = i
+      largest_j = j + 1
+    }
+
+    if (largest_i != i || largest_j != j) {
+      swap(tab, (i, j), (largest_i, largest_j))
+      swapBackward(tab, (largest_i, largest_j))
     }
   }
 
@@ -72,5 +100,12 @@ object YoungTableau {
         return false
     }
     true
+  }
+
+  def extractMin(tab: Array[Array[Int]]): Int = {
+    val out = tab(0)(0)
+    tab(0)(0) = inf
+    swapBackward(tab, (0, 0))
+    out
   }
 }
