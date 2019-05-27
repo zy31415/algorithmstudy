@@ -1,26 +1,16 @@
 package bst
 
-class BST[T: Ordering] {
+object BST {
 
-  private val odr = implicitly(Ordering[T])
-
-  class Node (val value: T) {
-    var left: Node = _
-    var right: Node = _
+  class Node[T: Ordering](val value: T) {
+    var left: Node[T] = _
+    var right: Node[T] = _
+    var parent: Node[T] = _
   }
 
-  private[bst] var root: Node = _
-
-  def add(element: T): Unit = {
-    if (root == null)
-      root = new Node(element)
-    else
-      add(element, root)
-  }
-
-  private def add(element: T, root: Node): Unit = {
+  def add[T: Ordering](element: T, root: Node[T]): Unit = {
     assert(root != null)
-
+    val odr=implicitly(Ordering[T])
     if (odr.gt(element, root.value)) {
       if (root.right == null)
         root.right = new Node(element)
@@ -34,9 +24,10 @@ class BST[T: Ordering] {
     }
   }
 
-  def contains(element: T): Boolean = search(element).isDefined
+  def contains[T: Ordering](element: T, root: Node[T]): Boolean = search(element, root).isDefined
 
-  private def search(element: T): Option[Node] = {
+  def search[T: Ordering](element: T, root: Node[T]): Option[Node[T]] = {
+    val odr=implicitly(Ordering[T])
     var node = root
     while (node != null) {
       if (odr.equiv(node.value, element))
@@ -49,12 +40,12 @@ class BST[T: Ordering] {
     None
   }
 
-  def sorted(): Seq[T] = {
+  def sorted[T:Ordering](root: Node[T]): Seq[T] = {
     val list = Seq[T]()
     dfs(root, list)
   }
 
-  private def dfs(node: Node, list: Seq[T]): Seq[T] = {
+  private def dfs[T:Ordering](node: Node[T], list: Seq[T]): Seq[T] = {
     if (node == null)
       list
     else {
@@ -64,49 +55,40 @@ class BST[T: Ordering] {
     }
   }
 
-  def max: Option[T] = {
-    val res = maxNode
-    if (res.isDefined)
-      Some(res.get.value)
-    else
-      None
-  }
-
-  private def maxNode: Option[Node] = {
-    if (root == null)
-      return None
+  def maxNode[T](root: Node[T]): Node[T] = {
+    assert(root != null)
     var node = root
     while (node.right != null)
       node = node.right
-    Some(node)
+    node
   }
 
-  def min: Option[T] = {
-    val res = minNode
-    if (res.isDefined)
-      Some(res.get.value)
-    else
-      None
-  }
-
-  private def minNode: Option[Node] = {
-    if (root == null)
-      return None
+  def minNode[T:Ordering](root: Node[T]): Node[T] = {
+    assert(root != null)
     var node = root
     while (node.left != null)
       node = node.left
-    Some(node)
+    node
   }
 
-  private def remove(element: T): Unit = {
-    val nodeOption = search(element)
-
+  private def remove[T:Ordering](element: T, root: Node[T]): Unit = {
+    val nodeOption = search(element, root)
     if (nodeOption.isEmpty)
       return
-
     val node = nodeOption.get
+  }
 
-
-
+  def successor[T:Ordering](node: Node[T]): Node[T] = {
+    if (node.right != null)
+      minNode(node.right)
+    else {
+      var c = node
+      while (c.parent != null){
+        if (c.parent.left == c.parent)
+          return c.parent
+        c = c.parent
+      }
+      null
+    }
   }
 }

@@ -28,4 +28,34 @@ object Tree {
     }
     res
   }
+
+  def inorderTraverse2(root: Node):Seq[Int] = {
+    var res = Seq[Int]()
+
+    if (root == null)
+      return res
+
+    var stack = List(root)
+    stack = pushLeft(stack, root)
+
+    while (stack.nonEmpty) {
+      val node = stack.head
+      stack = stack.drop(1)
+      res = res :+ node.value
+
+      if (node.right != null)
+        stack = pushLeft(node.right +: stack, node.right)
+    }
+    res
+  }
+
+  private def pushLeft(stack: List[Node], node: Node): List[Node] = {
+    var out = stack
+    var cur = node.left
+    while (cur != null) {
+      out = cur +: out
+      cur = cur.left
+    }
+    out
+  }
 }
