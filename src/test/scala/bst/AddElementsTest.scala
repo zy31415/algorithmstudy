@@ -2,7 +2,7 @@ package bst
 
 import org.scalatest.FunSuite
 
-class BSTAddElementsTest extends FunSuite{
+class AddElementsTest extends FunSuite{
   test("test - root") {
     val root = new BST.Node(1)
 
@@ -41,9 +41,6 @@ class BSTAddElementsTest extends FunSuite{
     assert(root.left.value == 1)
     assert(root.left.left == null)
     assert(root.left.right == null)
-
-//    val arr = bst.sorted()
-//    println(arr)
 
   }
 }

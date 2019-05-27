@@ -3,7 +3,7 @@ package bst
 import org.scalatest.FunSuite
 import utils.TestUtils.assertAscending
 
-class BSTSearchTest extends FunSuite{
+class SearchTest extends FunSuite{
   test("test contains") {
     val root = new BST.Node(2)
     assert(BST.contains(2, root))

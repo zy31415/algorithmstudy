@@ -2,7 +2,7 @@ package bst
 
 import org.scalatest.FunSuite
 
-class BSTMaxNodeTest extends FunSuite{
+class MaxNodeTest extends FunSuite{
   test("test max of root") {
     val root = new BST.Node(0)
     assert(BST.maxNode(root) == root)

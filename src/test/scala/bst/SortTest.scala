@@ -3,7 +3,7 @@ package bst
 import org.scalatest.FunSuite
 import utils.TestUtils.assertAscending
 
-class BSTSortTest extends FunSuite{
+class SortTest extends FunSuite{
 
   test("test - two elements") {
     val root = new BST.Node(1)
