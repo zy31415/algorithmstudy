@@ -103,4 +103,28 @@ class RotationsTest extends FunSuite{
     assert(node_3.rightChild == null)
     assert(node_3.parent == node_4)
   }
+
+  /*
+          1                            1
+           \                            \
+            2                            4
+             \    left Rotate on 2      /
+              4  ================>     2
+             /                          \
+            3                            3
+   */
+  test("left rotation - 4 nodes") {
+    val node_1 = new Node(1)
+    val node_2 = BST.insert(node_1, 2)
+    val node_4 = BST.insert(node_1, 4)
+    val node_3 = BST.insert(node_1, 3)
+
+    val n = Rotations.leftRotate(node_2)
+
+    assert(n == node_4)
+    assert(node_2.parent == node_4)
+    assert(node_4.parent == node_1)
+    assert(node_1.rightChild == node_4)
+    assert(node_1.leftChild == null)
+  }
 }

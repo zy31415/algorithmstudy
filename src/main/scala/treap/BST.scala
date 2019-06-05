@@ -3,8 +3,13 @@ package treap
 import scala.util.Random
 
 object BST {
-  def insert(root: Node, key: Int, priority: Long = Random.nextLong()): Node = {
-    val inserted = new Node(key, priority)
+
+  def insert(root: Node, key: Int, priority: Long = Random.nextLong()): Node = insert(root, new Node(key, priority))
+
+  def insert(root: Node, node: Node): Node = {
+    val inserted = node
+    val key = node.key
+
     if (root == null)
       inserted
     else {
