@@ -1,13 +1,13 @@
 package treap
 
 object Treap {
-  def insert(root: Node, key: Int): Node = {
+  def insert[T<:TreeNode with Key with Priority](root: T, key: Int): T = {
     val inserted = BST.insert(root, key)
     Heap.bubbleUp(inserted)
     inserted
   }
 
-  def insert(root: Node, node: Node): Node = {
+  def insert[T<:TreeNode with Key with Priority](root: T, node: T): T = {
     val inserted = BST.insert(root, node)
     Heap.bubbleUp(inserted)
     inserted

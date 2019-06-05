@@ -1,9 +1,9 @@
 package treap
 
 object Heap {
-  def bubbleUp(node: Node): Unit = {
+  def bubbleUp[T<:TreeNode with Priority](node: T): Unit = {
     assert(node != null)
-    val parent = node.parent
+    val parent = node.parent.asInstanceOf[T]
 
     if (parent != null && parent.priority < node.priority) {
       val next =

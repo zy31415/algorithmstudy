@@ -1,12 +1,14 @@
 package treap
 
-import scala.util.Random
-
 object BST {
 
-  def insert(root: Node, key: Int, priority: Long = Random.nextLong()): Node = insert(root, new Node(key, priority))
+  def insert[T<:TreeNode with Key](root: T, key: Int): T = {
+    val node = new TreeNode with Key
+    node.key = key
+    insert(root, node.asInstanceOf[T])
+  }
 
-  def insert(root: Node, node: Node): Node = {
+  def insert[T<:TreeNode with Key](root: T, node: T): T = {
     val inserted = node
     val key = node.key
 
@@ -14,11 +16,11 @@ object BST {
       inserted
     else {
       var p = root
-      var c = if (key > root.key) root.rightChild else root.leftChild
+      var c = if (key > root.key) root.rightChild.asInstanceOf[T] else root.leftChild.asInstanceOf[T]
 
       while (c != null) {
         p = c
-        c = if (key > p.key) p.rightChild else p.leftChild
+        c = if (key > p.key) p.rightChild.asInstanceOf[T] else p.leftChild.asInstanceOf[T]
       }
 
       inserted.parent = p

@@ -1,10 +1,10 @@
 package treap
 
 object Rotations {
-  def leftRotate(x: Node): Node = {
+  def leftRotate[T<:TreeNode](x: T): T = {
     // Assume that x has right child.
     assert(x.rightChild != null)
-    val y = x.rightChild
+    val y = x.rightChild.asInstanceOf[T]
 
     // Step 1
     y.parent = x.parent
@@ -27,10 +27,10 @@ object Rotations {
     y
   }
 
-  def rightRotate(y: Node): Node = {
+  def rightRotate[T<:TreeNode](y: T): T = {
     // Assume y has left child.
     assert(y.leftChild != null)
-    val x = y.leftChild
+    val x = y.leftChild.asInstanceOf[T]
 
     // Step 1
     x.parent = y.parent
